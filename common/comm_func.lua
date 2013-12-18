@@ -1,7 +1,6 @@
 --xianwei
 --2013-12-11
 
-
 local string = string
 local assert = assert
 local type = type 
@@ -64,3 +63,15 @@ function repr(obj)
 	tab = tab.."}"
 	return tab
 end
+
+function copy_tab(st)  
+    local tab = {}  
+    for k, v in pairs(st or {}) do  
+        if type(v) ~= "table" then  
+            tab[k] = v  
+        else  
+            tab[k] = copyTab(v)  
+        end  
+    end  
+    return tab  
+end  

@@ -1,3 +1,10 @@
+local setmetatable = setmetatable
+local getmetatable = getmetatable
+local print = print
+local comm_func = require "common.comm_func"
+
+module("base.class")
+
 local _class={}
  
 function class(super)
@@ -19,7 +26,13 @@ function class(super)
  
 				create(class_type,...)
 			end
-			setmetatable(obj,{ __index=_class[class_type] })
+			
+			setmetatable(obj,{ __index=comm_func.copy_tab(_class[class_type]), __newindex = 
+								function(t, k,v)
+									_M[k] = v
+								end
+							})
+			--print (comm_func.repr(getmetatable(obj)))
 			return obj
 		end
 	local vtbl={}
@@ -30,7 +43,7 @@ function class(super)
 			vtbl[k]=v
 		end
 	})
- 
+	--print (comm_func.repr(getmetatable(class_type)))
 	if super then
 		setmetatable(vtbl,{__index=
 			function(t,k)
@@ -60,11 +73,3 @@ function base_type:hello()	-- 定义另一个成员函数 base_type:hello
 	self.hello = self.hello
 end
 
-
-a = base_type.new(1)
-a:print_x()
-a:hello()
-
-test = class(base_type)
-test.new(2)
-test:hello()
