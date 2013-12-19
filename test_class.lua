@@ -2,10 +2,32 @@
 local class = require "base.class"
 local comm_func = require "common.comm_func"
 
-a = class.BaseClass.new(1)
+A = class.Class(class.object)
 
-test = class.Class(class.BaseClass)
-print ('xx', comm_func.repr(getmetatable(test)))
-obj = test:new(2)
-print ('xx', comm_func.repr(getmetatable(obj)))
-print (obj.hello())
+function A:Ator(a)
+	self.a = 0
+end
+
+function A:hello()
+	print ("hello a = ", self.a)
+end
+
+function A:test()
+	print ("test A")
+end
+
+B = class.Class(class.object)
+
+function B:Ator(b)
+	self.b = 1 
+end
+
+function B:hello()
+	print ("hello b = ", self.b)
+end
+
+C = class.Class(B,A)
+obj = C.new(3)
+print (obj.a, obj.b)
+print (obj:hello())
+print (obj:test())
