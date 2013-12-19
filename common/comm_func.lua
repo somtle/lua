@@ -8,6 +8,7 @@ local loadstring = loadstring
 local print = print
 local pairs = pairs
 local tostring = tostring
+local getmetatable = getmetatable
 local table = table
 
 module("common.comm_func")
@@ -58,7 +59,7 @@ function repr(obj)
 	end
 	local tab = "{"
 	for key, value in pairs(obj) do 
-		tab = tab.."['"..key.."']="..repr(value)..","
+		tab = tab.."['"..repr(key).."']="..repr(value)..","
 	end
 	tab = tab.."}"
 	return tab
@@ -75,3 +76,15 @@ function copy_tab(st)
     end  
     return tab  
 end  
+
+function get_metatable(tb)
+	assert(type(tb) == "table", "args not table type")
+	mt = getmetatable(tb)
+	if not mt then
+		return repr(tb) 
+	else
+		tb["metetable"] = get_metatable(mt)
+		return tb
+	end
+	
+end

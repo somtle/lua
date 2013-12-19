@@ -7,9 +7,9 @@ module("base.class")
 
 local _class={}
  
-function class(super)
+function Class(super)
 	local class_type={}
-	class_type.ctor=false
+	class_type.Ator=false
 	class_type.super=super
 	class_type.new=function(...) 
 			local obj={}
@@ -19,20 +19,15 @@ function class(super)
 					if c.super then
 						create(c.super,...)
 					end
-					if c.ctor then
-						c.ctor(obj,...)
+					if c.Ator then
+						c.Ator(obj,...)
 					end
 				end
  
 				create(class_type,...)
 			end
-			
-			setmetatable(obj,{ __index=comm_func.copy_tab(_class[class_type]), __newindex = 
-								function(t, k,v)
-									_M[k] = v
-								end
-							})
-			--print (comm_func.repr(getmetatable(obj)))
+
+			setmetatable(obj,{ __index=_class[class_type]})
 			return obj
 		end
 	local vtbl={}
@@ -43,33 +38,15 @@ function class(super)
 			vtbl[k]=v
 		end
 	})
-	--print (comm_func.repr(getmetatable(class_type)))
 	if super then
 		setmetatable(vtbl,{__index=
-			function(t,k)
-				local ret=_class[super][k]
-				vtbl[k]=ret
-				return ret
-			end
+				function(t,k)
+					local ret=_class[super][k]
+					vtbl[k]=ret
+					return ret
+				end
 		})
 	end
- 
 	return class_type
-end
-
-base_type=class()		-- 定义一个基类 base_type
- 
-function base_type:ctor(x)	-- 定义 base_type 的构造函数
-	print("base_type ctor")
-	self.x=x
-end
- 
-function base_type:print_x()	-- 定义一个成员函数 base_type:print_x
-	print(self.x)
-end
- 
-function base_type:hello()	-- 定义另一个成员函数 base_type:hello
-	print("hello base_type")
-	self.hello = self.hello
-end
+ends
 
