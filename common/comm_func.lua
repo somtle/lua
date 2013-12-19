@@ -77,14 +77,7 @@ function copy_tab(st)
     return tab  
 end  
 
-function get_metatable(tb)
-	assert(type(tb) == "table", "args not table type")
-	mt = getmetatable(tb)
-	if not mt then
-		return repr(tb) 
-	else
-		tb["metetable"] = get_metatable(mt)
-		return tb
-	end
-	
+function trim (s) 
+--[[È¥´¦¿Õ¸ñ]]--
+  return (string.gsub(s, "^%s*(.-)%s*$", "%1")) 
 end
