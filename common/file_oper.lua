@@ -19,8 +19,9 @@ function read_file(file_path, name)
 	file_name = file_path..'\\'..name
 	print (file_name)
 	for line in io.lines(file_name) do 
+		line = comm_func.trim(line)
 		tab = comm_func.str_split(line, "\t")
-		print ( comm_func.repr(tab))
+		print (comm_func.repr(tab))
 	end
 	
 end
