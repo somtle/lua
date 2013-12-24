@@ -17,8 +17,8 @@ end
 function star_with(st, s)
 	--[[字符串以指定字符串开头]]--
 	assert(type(st) == "string", "args is not string type")
-	res = string.find(st, s)
-	if res == 1 then
+	res = string.find(st, string.format("^%s", s))
+	if type(res) == "number" then
 		return true
 	end
 	return false
@@ -27,8 +27,7 @@ end
 function end_with(st, s)
 	--[[字符串以指定字符串结尾]]--
 	assert(type(st) == "string", "args is not string type")
-	print (string.format("^%s", s))
-	res = string.find(st, string.format("^%s", s))
+	res = string.find(st, string.format("%s$", s))
 	if type(res) == "number" then
 		return true
 	end

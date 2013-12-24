@@ -27,16 +27,23 @@ function read_file(file_path, name)
 	
 end
 
-handle = io.open("D:\\1.txt","r")
+--[[handle = io.open("D:\\1.txt","r")
 st = handle:read()
-print(st)
+print(st)]]--
 
 
-read_file(file_path, file_name)
+--read_file(file_path, file_name)
 
---[[st = "#============"
-res = str_oper.star_with(st, "#================================")
+st = "#============"
+res = str_oper.star_with(st, "#")
 res1 = str_oper.end_with(st, "=")
 print (res, res1)
-print (string.gsub(st, "^%s*(.-)%s*$", "%1"))]]--
+print (string.gsub(st, "^%s*(.-)%s*$", "%1"))
+
+--[[info = {"xianwei", "hah"}
+local a, b = info[1], info[2]
+print (a, b)
+
+tab = {["hehe"] = 1, ["haha"] = 2}
+print (tab.hehe, tab.haha)]]--
 
