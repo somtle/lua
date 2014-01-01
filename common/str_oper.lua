@@ -24,6 +24,15 @@ function star_with(st, s)
 	return false
 end
 
+function find(st, s)
+	--查找s字符串是否在st当中
+	res = string.find(st, s)
+	if res ~= nil then
+		return true
+	end
+	return false
+end
+
 function end_with(st, s)
 	--[[字符串以指定字符串结尾]]--
 	assert(type(st) == "string", "args is not string type")

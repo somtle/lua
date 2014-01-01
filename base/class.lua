@@ -23,22 +23,27 @@ function Class(...)
 	--实例obj的函数
 	class_type.new=function(...) 
 			local obj={}
+			
+			--必须要先设置 元表的__index ,才能调用对象的Ator方法, 否则在Ator内部调用其他的对象函数会找不到
+			setmetatable(obj,{ __index=_class[class_type]})
 			do
 				local create_super
 				create_super = function(c, ...)
 					for k, v in ipairs(c.super_tb)do 
 						if table.getn(v.super_tb) > 0 then
-							create(v, ...)
+							create_super(v, ...)
 						end
 						if v.Ator then
 							v.Ator(obj, ...)
 						end
 					end
+					if c.Ator then
+						c.Ator(obj, ...)
+					end
 				end
 				create_super(class_type, ...)
 			end
-
-			setmetatable(obj,{ __index=_class[class_type]})
+			
 			return obj
 		end
 	local vtbl={}
@@ -66,5 +71,5 @@ function Class(...)
 	return class_type
 end
 
-local object = Class()
+object = Class()
 

@@ -19,6 +19,21 @@ function exec(str)
 	return loadstring(str)()
 end
 
+function get_cur_os()
+	--获得当前的操作系统
+	return os.getenv("OS")
+end
+
+function is_windows()
+	--判断当前是否是windows系统
+	local cur_os = get_cur_os()
+	local res = string.find(cur_os, "NT")
+	if res ~= nil then
+		return true
+	end
+	return false
+end
+
 function eval(str, tab) 
 	--[[执行带参数语句
 		eg: eval("A+B", {['A']=1, ['B']=2}) = 3
